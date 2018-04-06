@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>My Site</title>
+	<style>
+		body{
+			background-color: lightyellow;
+			color: lightblue;
+		}
+	</style>
+</head>
+<body>
+	<% include blocks/header.ejs %>
+	<h1>News Page with news Id <%= newsId %></h1>
+	<p><%= newsArticle %></p>
+	<p><b>Title:</b><%= obj.title %></p>
+	<p><b>ID:</b><%= obj.id %></p>
+	<ul>
+		<% obj.items.forEach(function(item) { %>
+			<li><%= item %></li>
+		<% }); %>
+	</ul>
+</body>
+</html>

@@ -164,23 +164,80 @@
 
 //lesson 11 ROUTING NODE JS
 
-var fs = require('fs');
-var http = require('http');
+// var fs = require('fs');
+// var http = require('http');
 
-var server = http.createServer(function(req, res) {
-	console.log("URL pages: " + req.url);
-	if(req.url === '/index' || req.url === '/'){
-		res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
-		fs.createReadStream(__dirname + '/index.html').pipe(res);
-	} else if (req.url === '/about'){
-		res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
-		fs.createReadStream(__dirname + '/about.html').pipe(res);
-	} else {
-		res.writeHead(404, {'Content-Type': 'text/html; charset=utf-8'});
-		fs.createReadStream(__dirname + '/404.html').pipe(res);
-	}
+// var server = http.createServer(function(req, res) {
+// 	console.log("URL pages: " + req.url);
+// 	if(req.url === '/index' || req.url === '/'){
+// 		res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+// 		fs.createReadStream(__dirname + '/index.html').pipe(res);
+// 	} else if (req.url === '/about'){
+// 		res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+// 		fs.createReadStream(__dirname + '/about.html').pipe(res);
+// 	} else {
+// 		res.writeHead(404, {'Content-Type': 'text/html; charset=utf-8'});
+// 		fs.createReadStream(__dirname + '/404.html').pipe(res);
+// 	}
+// });
+
+// server.listen(3010, '192.168.1.149');
+// console.log('track port 3010');
+
+//add express.js + examples of routing
+
+// var express = require('express');
+
+// var app = express();
+
+// app.get('/', function(req, res){
+// 	res.send('This is home');
+// });
+
+// app.get('/news', function(req, res){
+// 	res.send('This is news');
+// });
+
+// app.get('/news/:id', function(req, res){
+// 	res.send('ID is - ' + req.params.id);
+// });
+
+// app.listen(3010);
+
+//lesson #14. template ejs with express.js + output html files in browser
+//lesson #15 static files and extra software
+
+var express = require('express');
+
+var app = express();
+var bodyParser = require('body-parser');
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+app.set('view engine', 'ejs');
+
+app.use('/public', express.static('public'));
+
+app.get('/index', function(req, res){
+	res.render('index');
 });
 
-server.listen(3010, '192.168.1.149');
-console.log('track port 3010');
+app.get('/about', function(req, res){
+	res.render('about');
+});
+
+app.post('/about', urlencodedParser, function(req, res){
+	if (!req.body) return res.sendStatus(400)
+		console.log(req.body);
+	res.render('about-success', {data: req.body});
+});
+
+app.get('/news/:id', function(req, res){
+	var obj = {title: "New_news", id: 4, items: ['Home', 'About', 'Products', 'Contacts']};
+	console.log(req.query);
+	res.render('news', {newsId: req.params.id, newsArticle: 'Say hi!!!!!', obj: obj});
+});
+
+app.listen(3010);
+
+
 

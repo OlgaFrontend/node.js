@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>My Site</title>
+	<style>
+		body{
+			background-color: lightgreen;
+			color: white;
+			/*text-align: center;*/
+		}
+	</style>
+</head>
+<body>
+	<% include blocks/header.ejs %>
+	<h1>ABOUT SUCCESS PAGE</h1>
+	<p>Thanks!!!</p>
+	<p>
+		<p><b>Email:</b><%= data.email %></p>
+		<p><b>Password:</b><%= data.pass %></p>
+		<p><b>isCheck:</b><%= data.check %></p>
+	</p>
+</body>
+</html>
